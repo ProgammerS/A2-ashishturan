@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Images</title>
+</head>
+<body>
+    <h1>Multiple Random Images</h1>
+    <button onclick="fetchMultipleImages()">Fetch Multiple Images</button>
+    <div id="images"></div>
+
+    <script>
+        async function fetchMultipleImages() {
+            try {
+                const response = await fetch('/fetch-multiple');
+                const images = await response.json();
+
+                const imagesContainer = document.getElementById('images');
+                imagesContainer.innerHTML = '';
+
+                images.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/uploads/${image}`;
+                    imgElement.alt = image;
+                    imgElement.style.width = '200px';
+                    imgElement.style.margin = '10px';
+                    imagesContainer.appendChild(imgElement);
+                });
+            } catch (error) {
+                console.error('Error fetching multiple images:', error);
+            }
+        }
+    </script>
+</body>
+</html>

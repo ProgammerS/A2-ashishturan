@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    <div id="gallery"></div>
+
+    <script>
+        async function fetchAllImages() {
+            try {
+                const response = await fetch('/fetch-all');
+                const images = await response.json();
+
+                const galleryContainer = document.getElementById('gallery');
+                galleryContainer.innerHTML = '';
+
+                images.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/uploads/${image}`;
+                    imgElement.alt = image;
+                    imgElement.style.width = '200px';
+                    imgElement.style.margin = '10px';
+                    galleryContainer.appendChild(imgElement);
+                });
+            } catch (error) {
+                console.error('Error fetching all images:', error);
+            }
+        }
+
+        fetchAllImages();
+    </script>
+</body>
+</html>

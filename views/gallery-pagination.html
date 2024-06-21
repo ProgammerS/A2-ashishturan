@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Pagination</title>
+</head>
+<body>
+    <h1>Image Gallery with Pagination</h1>
+    <div id="gallery"></div>
+    <div id="pagination"></div>
+
+    <script>
+        let currentPage = 1;
+
+        async function fetchPaginatedImages(page) {
+            try {
+                const response = await fetch(`/fetch-all-pagination/pages/${page}`);
+                const images = await response.json();
+
+                const galleryContainer = document.getElementById('gallery');
+                galleryContainer.innerHTML = '';
+
+                images.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/uploads/${image}`;
+                    imgElement.alt = image;
+                    imgElement.style.width = '200px';
+                    imgElement.style.margin = '10px';
+                    galleryContainer.appendChild(imgElement);
+                });
+
+                updatePaginationControls();
+            } catch (error) {
+                console.error('Error fetching paginated images:', error);
+            }
+        }
+
+        function updatePaginationControls() {
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = '';
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    fetchPaginatedImages(currentPage);
+                }
+            };
+            paginationContainer.appendChild(prevButton);
+
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.onclick = () => {
+                currentPage++;
+                fetchPaginatedImages(currentPage);
+            };
+            paginationContainer.appendChild(nextButton);
+        }
+
+        fetchPaginatedImages(currentPage);
+    </script>
+</body>
+</html>
