@@ -4,11 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery with Pagination</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin: 10px;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
-    <h1>Image Gallery with Pagination</h1>
-    <div id="gallery"></div>
-    <div id="pagination"></div>
+    <div class="container">
+        <h1>Image Gallery with Pagination</h1>
+        <div id="gallery" class="gallery"></div>
+        <div id="pagination" class="pagination"></div>
+    </div>
 
     <script>
         let currentPage = 1;
@@ -25,8 +96,6 @@
                     const imgElement = document.createElement('img');
                     imgElement.src = `/uploads/${image}`;
                     imgElement.alt = image;
-                    imgElement.style.width = '200px';
-                    imgElement.style.margin = '10px';
                     galleryContainer.appendChild(imgElement);
                 });
 
